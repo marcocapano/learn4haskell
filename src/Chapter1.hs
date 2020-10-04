@@ -209,31 +209,31 @@ So, the output in this example means that 'False' has type 'Bool'.
 > Try to guess first and then compare your expectations with GHCi output
 
 >>> :t True
-Bool
+True :: Bool
 >>> :t 'a'
-Char
+'a' :: Char
 >>> :t 42
-Num
+42 :: Num p => p
 
 A pair of boolean and char:
 >>> :t (True, 'x')
-(Bool, Char)
+(True, 'x') :: (Bool, Char)
 
 Boolean negation:
 >>> :t not
-Bool -> Bool
+not :: Bool -> Bool
 
 Boolean 'and' operator:
 >>> :t (&&)
-Bool -> Bool -> Bool
+(&&) :: Bool -> Bool -> Bool
 
 Addition of two numbers:
 >>> :t (+)
-Num a => a -> a -> a
+(+) :: Num a => a -> a -> a
 
 Maximum of two values:
 >>> :t max
-Ord a => a -> a -> a
+max :: Ord a => a -> a -> a
 
 You might not understand each type at this moment, but don't worry! You've only
 started your Haskell journey. Types will become your friends soon.
@@ -303,7 +303,7 @@ expressions in GHCi
 >>> 1 + 2
 3
 >>> 10 - 15
-5
+-5
 >>> 10 - (-5)  -- negative constants require ()
 15
 >>> (3 + 5) < 10
@@ -313,7 +313,7 @@ False
 >>> 10 < 20 || 20 < 5
 True
 >>> 2 ^ 10  -- power
-200
+1024
 >>> not False
 True
 >>> div 20 3  -- integral division
@@ -479,7 +479,7 @@ Implement a function that returns the last digit of a given number.
 -}
 -- DON'T FORGET TO SPECIFY THE TYPE IN HERE
 lastDigit :: Int -> Int
-lastDigit n = mod n 10
+lastDigit n = mod (abs n) 10
 
 
 {- |
@@ -509,7 +509,7 @@ branches because it is an expression and it must always return some value.
   satisfying the check will be returned and, therefore, evaluated.
 -}
 closestToZero :: Int -> Int -> Int
-closestToZero x y = min (abs x) (abs y)
+closestToZero x y = if ((abs x) <= (abs y)) then x else y
 
 
 {- |
@@ -545,8 +545,8 @@ Casual reminder about adding top-level type signatures for all functions :)
 
 mid :: Int -> Int -> Int -> Int
 mid x y z
-    | (x < y && x > z) || (x < z && x > y) = x
-    | (y < x && y > z) || (y < z && y > x) = y
+    | (x <= y && z <= x) || (x <= z && y <= x) = x
+    | (y <= x && z <= y) || (y <= z && x <= y) = y
     | otherwise = z
 
 {- |
@@ -634,9 +634,9 @@ specifying complex expressions.
 
 sumLast2 :: Int -> Int
 sumLast2 n =
-    let a = div (mod n 100) 10
-        b = mod n 10
-    in a + b
+    let units = mod (abs n) 10
+        tens = mod (div (abs n) 10) 10
+    in units + tens 
 
 
 {- |
@@ -658,8 +658,10 @@ aren't ready for this boss yet!
 -}
 
 firstDigit :: Int -> Int
-firstDigit n = 
-  if (div n 10) == 0 then n else firstDigit (div (n - (mod n 10)) 10)
+firstDigit n
+  | n < 0 = firstDigit (0 - n)
+  | n < 10 = n
+  | otherwise = firstDigit (div n 10)
 
 
 {-
