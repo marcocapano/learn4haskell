@@ -301,31 +301,43 @@ expressions in GHCi
   functions and operators first. Remember this from the previous task? ;)
 
 >>> 1 + 2
-3
+INSERT THE RESULT INSTEAD OF THE TEXT
 >>> 10 - 15
 -5
+
 >>> 10 - (-5)  -- negative constants require ()
 15
+
 >>> (3 + 5) < 10
 True
+
 >>> True && False
 False
+
 >>> 10 < 20 || 20 < 5
 True
+
 >>> 2 ^ 10  -- power
 1024
+
 >>> not False
 True
+
 >>> div 20 3  -- integral division
 6
+
 >>> mod 20 3  -- integral division remainder
 2
+
 >>> max 4 10
 10
+
 >>> min 5 (max 1 2)
 2
+
 >>> max (min 1 10) (min 5 7)
 5
+
 
 Because Haskell is a __statically-typed__ language, you see an error each time
 you try to mix values of different types in situations where you are not
@@ -416,7 +428,7 @@ task is to specify the type of this function.
 >>> squareSum 3 4
 49
 -}
-squareSum :: Int -> Int -> Int
+
 squareSum x y = (x + y) * (x + y)
 
 
@@ -437,7 +449,7 @@ Implement the function that takes an integer value and returns the next 'Int'.
   function body with the proper implementation.
 -}
 next :: Int -> Int
-next x = x + 1
+next x = error "next: not implemented!"
 
 {- |
 After you've implemented the function (or even during the implementation), you
