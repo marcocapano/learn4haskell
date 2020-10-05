@@ -301,7 +301,7 @@ expressions in GHCi
   functions and operators first. Remember this from the previous task? ;)
 
 >>> 1 + 2
-INSERT THE RESULT INSTEAD OF THE TEXT
+3
 >>> 10 - 15
 -5
 
@@ -429,6 +429,7 @@ task is to specify the type of this function.
 49
 -}
 
+squareSum :: Int -> Int -> Int
 squareSum x y = (x + y) * (x + y)
 
 
@@ -521,7 +522,7 @@ branches because it is an expression and it must always return some value.
   satisfying the check will be returned and, therefore, evaluated.
 -}
 closestToZero :: Int -> Int -> Int
-closestToZero x y = if ((abs x) <= (abs y)) then x else y
+closestToZero x y = if abs x <= abs y then x else y
 
 
 {- |
